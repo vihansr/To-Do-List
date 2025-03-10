@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %} Kaizen - Your Path to Productivity {% endblock %}
+
+{% block content %}
+{% if current_user.is_authenticated %}
+<div class="container d-flex flex-column align-items-center my-5">
+    <h2 class="fw-bold">Welcome, {{ current_user.username }}! 👋</h2>
+    <h4 class="text-muted">Here's Your To-Do List...</h4>
+
+    <div class="w-50 mt-4 p-4 border rounded shadow-sm bg-light">
+        {% if todos %}
+            <ul class="list-group list-group-flush">
+                {% for todo in todos %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                        {% if todo.completed %}
+                        <span class="fw-semibold text-decoration-line-through text-muted">
+                            {{ todo.task }}
+                        </span>
+                        {% else %}
+                        <span class="fw-semibold">
+                            {{ todo.task }}
+                        </span>
+                        {% endif %}
+                        <a href="{{url_for('task_done', task_id=todo.id)}}" class="btn btn-sm btn-outline-success">✔</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-muted text-center">No tasks yet. Start adding one!</p>
+        {% endif %}
+    </div>
+<div class="d-flex gap-3 mt-4">
+        <a href="{{ url_for('add_task') }}" class="btn btn-success px-4 py-2 rounded-pill shadow">➕ Add Task</a>
+        <a href="{{ url_for('clear_tasks') }}" class="btn btn-danger px-4 py-2 rounded-pill shadow">🗑 Clear List</a>
+    </div>
+</div>
+{% else %}
+<div class="container">
+    <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+      <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+        <h1 class="display-4 fw-bold lh-1 text-body-emphasis">Stay Organized, Stay Focused!</h1>
+        <p class="lead">Kaizen is your personal to-do list manager designed to help you track your goals and accomplish them efficiently. Simplify your tasks, stay on top of your priorities, and achieve more every day.</p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
+          <a href="{{url_for('register')}}" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold">Get Started</a>
+          <a href="{{url_for('login')}}" class="btn btn-outline-secondary btn-lg px-4">Log In</a>
+        </div>
+      </div>
+      <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg d-flex justify-content-center">
+        <img class="rounded-lg-3 img-fluid" src="{{ url_for('static', filename='3961975.jpg') }}" alt="Kaizen - Your Productivity Partner" style="max-width: 100%; height: auto;">
+      </div>
+    </div>
+</div>
+
+<div class="container px-4 py-5" id="features">
+    <h2 class="pb-2 border-bottom">Why Choose Kaizen?</h2>
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+      <div class="col d-flex align-items-start">
+        <div class="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+          <i class="bi bi-check-circle-fill fs-2"></i>
+        </div>
+        <div>
+          <h3 class="fs-2 text-body-emphasis">Effortless Task Management</h3>
+          <p>Keep track of your daily tasks with ease. Add, complete, and manage your to-dos in just a few clicks.</p>
+        </div>
+      </div>
+      <div class="col d-flex align-items-start">
+        <div class="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+          <i class="bi bi-calendar-check-fill fs-2"></i>
+        </div>
+        <div>
+          <h3 class="fs-2 text-body-emphasis">Stay on Track</h3>
+          <p>Never lose sight of your goals. Keep your to-do list updated and achieve your objectives step by step.</p>
+        </div>
+      </div>
+      <div class="col d-flex align-items-start">
+        <div class="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+          <i class="bi bi-lightbulb-fill fs-2"></i>
+        </div>
+        <div>
+          <h3 class="fs-2 text-body-emphasis">Boost Productivity</h3>
+          <p>Improve your workflow and get things done faster with Kaizen’s simple yet powerful to-do list.</p>
+        </div>
+      </div>
+    </div>
+</div>
+
+{% endif %}
+{% endblock %}
