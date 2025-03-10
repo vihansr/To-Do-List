@@ -1,17 +1,14 @@
 services:
   - type: web
-    name: Kaizen
+    name: flask-todo
     env: python
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn -w 4 -b 0.0.0.0:10000 main:app"
+    repo: https://github.com/vihansr/To-Do-List
+    branch: main
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn main:app
     envVars:
+      - key: DATABASE_URL
+        value: postgres://todo_7wei_user:TFcuGaOR0spLllV2ou5qaQ7FaXnmO3NG@dpg-cv7h2ftds78s7395rdgg-a.oregon-postgres.render.com/todo_7wei
       - key: SECRET_KEY
-        sync: false
-      - key: SMTP_SERVER
-        sync: false
-      - key: SMTP_PORT
-        sync: false
-      - key: EMAIL_USER
-        sync: false
-      - key: EMAIL_PASS
-        sync: false
+        value: "eihfn983n2c9"
